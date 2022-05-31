@@ -58,7 +58,7 @@ To compare the brain with the rule-based policy we calculated the cost of runnin
 
 1. Download **either** [miniconda](https://conda.io/miniconda.html) or [Anaconda](https://www.anaconda.com/download/)
 2. Open Anaconda / miniconda command prompt
-3. Change directory to where this repository is located and run
+3. Change directory to where this repository is located and run the following
     ```cmd
     conda env create -f environment.yml
     ```
@@ -66,6 +66,12 @@ To compare the brain with the rule-based policy we calculated the cost of runnin
     ```cmd
     conda activate bonsai-mgrid
     ```
+
+### Windows 10/11 Troubleshooting Only
+Using Windows 10 or Windows 11 may require installing Microsoft C++ Build Tools: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+
+You must have Microsoft Visual C++ 14.0 installed. 
+
 
 ## Running the Simulator Locally
 

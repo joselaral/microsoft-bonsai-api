@@ -1,0 +1,4 @@
+# Ignore src folder where pymgrid is installed
+src/
+
+sim/__pycache__/git
