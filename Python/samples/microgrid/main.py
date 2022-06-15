@@ -454,7 +454,7 @@ if __name__ == "__main__":
     group.add_argument(
         "--test-exported",
         type=int,
-        const=5000,  # if arg is passed with no PORT, use this
+        const=5009,  # if arg is passed with no PORT, use this
         nargs="?",
         metavar="PORT",
         help="Run simulator with an exported brain running on localhost:PORT (default 5000)",

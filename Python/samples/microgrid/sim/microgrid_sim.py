@@ -1,4 +1,6 @@
 import csv
+import math
+import random
 from pymgrid import MicrogridGenerator
 
 class MicrogridSim:
@@ -20,6 +22,7 @@ class MicrogridSim:
         self.cost_battery = 0.02 # default cost of utilizing the battery
         self.cost_co2 = 0.1 # coefficient penalizing for CO2 usage
         self.episode_length = 24*2
+        self.starting_charge = 0  # default starting charge
         self.load_ts = None
         self.pv_ts = None
         self.starting_time_step = None
@@ -57,6 +60,8 @@ class MicrogridSim:
         """
         Resets the sim state and re-initializes the sim with the config parameters.
         """
+        print(f'config[starting_charge] {config["starting_charge"]}')
+
         # first we reset all the parameters
         self.prev_state = {}
         self.state = {}
@@ -72,7 +77,9 @@ class MicrogridSim:
         if "cost_co2" in config:
             self.cost_co2 = config["cost_co2"]
         if "episode_length" in config:
-            self.episode_length = config["episode_length"]        
+            self.episode_length = config["episode_length"]    
+        if "starting_charge" in config:
+            self.starting_charge = config["starting_charge"]     
         
         # reset the sim
         self.mg.reset()
@@ -88,9 +95,23 @@ class MicrogridSim:
         self.mg._df_record_state["grid_co2"] = [self.mg.grid.co2]
         self.mg._df_record_state["grid_price_import"] = [self.mg.grid.price_import]
         self.mg._df_record_state["grid_price_export"] = [self.mg.grid.price_export]
+        
+        self.initialize_battery_charge()
+        print(f'DF Record State: {self.mg._df_record_state}')
 
         self.load_ts = self.mg._load_ts.iloc[self.mg._tracking_timestep:self.mg._tracking_timestep + self.episode_length].values.flatten()
-        self.pv_ts = self.mg._pv_ts.iloc[self.mg._tracking_timestep:self.mg._tracking_timestep + self.episode_length].values.flatten()
+        self.pv_ts = self.mg._pv_ts.iloc[self.mg._tracking_timestep:self.mg._tracking_timestep + self.episode_length].values.flatten()   
+
+    def initialize_battery_charge(self):
+        """
+        Changes the default zero charge from Pymgrid configuration to an initial charge. 
+
+        """
+        max_battery_charge = 58048.89
+        capa_to_charge = max_battery_charge - self.starting_charge 
+
+        self.mg._df_record_state["capa_to_discharge"] = [self.starting_charge]
+        self.mg._df_record_state["capa_to_charge"] = [capa_to_charge]
 
     def episode_step(self, action):
         control_dict = {"battery_charge": 0,
