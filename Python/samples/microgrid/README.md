@@ -67,10 +67,15 @@ To compare the brain with the rule-based policy we calculated the cost of runnin
     conda activate bonsai-mgrid
     ```
 
-### Windows 10/11 Troubleshooting Only
+### Windows 10/11 Troubleshooting 
+CMake must be installed in order to build specific libraries.
+
 Using Windows 10 or Windows 11 may require installing Microsoft C++ Build Tools: https://visualstudio.microsoft.com/visual-cpp-build-tools/
 
 You must have Microsoft Visual C++ 14.0 installed. 
+
+### WSL Troubleshooting
+CMake must be installed in WSL to install environment using conda.
 
 
 ## Running the Simulator Locally
