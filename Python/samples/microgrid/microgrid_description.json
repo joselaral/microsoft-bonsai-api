@@ -1,6 +1,7 @@
 {
     "name": "Microgrid",
     "timeout": 60,
+    "use_ml_prediction": true,
     "description": {
         "config": {"empty":0},
         "action": {"empty":0},

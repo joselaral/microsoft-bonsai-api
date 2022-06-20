@@ -20,4 +20,5 @@ dependencies:
       - typer==0.2.1
       - pytest==6.0.1
       - numpy==1.20.1
+      - sklearn==0.0
       - "--editable=git+https://github.com/Total-RD/pymgrid/@a18478145138921e3113e61b693b1c4cdb2c9945#egg=pymgrid"

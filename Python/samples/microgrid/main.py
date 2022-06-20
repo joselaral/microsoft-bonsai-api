@@ -61,6 +61,7 @@ class TemplateSimulatorSession:
         env_name: str = "Microgrid",
         log_data: bool = False,
         log_file_name: str = None,
+        enable_ml_prediction = True
     ):
         """Simulator Interface with the Bonsai Platform
 
@@ -75,7 +76,7 @@ class TemplateSimulatorSession:
         log_file_name : str, optional
             where to log data, by default None. If not specified, will generate a name.
         """
-        self.sim = microgrid_sim.MicrogridSim()
+        self.sim = microgrid_sim.MicrogridSim(enable_ml_prediction)
         self.count_view = False
         self.env_name = env_name
         self.render = render
