@@ -52,9 +52,12 @@ type SimState {
     prev_action_grid_import: number,
     sum_load: number,
     cost_co2: number,
-    co2_predict: number,
-    load_predict: number,
-    pv_predict: number,
+    co2_predict: number<0 .. 0.4>,
+    co2_predict_average:number<0 .. 0.4>,
+    load_predict: number<5000 .. 50000>,
+    load_predict_average: number<5000 .. 50000>,
+    pv_predict: number<0 .. 75000>,
+    pv_predict_average: number<0 .. 75000>
 }
 # This is a subset of the SimState that we'll make available to the brain
 # (these should all be values that will be available to a deployed brain)
@@ -68,8 +71,11 @@ type ObservedState {
     grid_co2: number<0 .. 0.4>,
     grid_price_import: number<0.075 .. 0.205>,
     co2_predict: number<0 .. 0.4>,
+    co2_predict_average:number<0 .. 0.4>,
     load_predict: number<5000 .. 50000>,
+    load_predict_average: number<5000 .. 50000>,
     pv_predict: number<0 .. 75000>,
+    pv_predict_average: number<0 .. 75000>
 }
 type Action {
     # if positive it means charge the battery, else means discharge
@@ -92,7 +98,7 @@ type SimConfig {
 simulator Simulator(Action: Action, Config: SimConfig): SimState {
     # Automatically launch the simulator with this
     # registered package name.
-    # package "SIM_NAME"
+    # package "Microgrid_-_Initial_Charge_Conditions_06-15-2022"
 }
 graph (input: ObservedState): Action {
     concept ProgrammedRules(input): Action {
